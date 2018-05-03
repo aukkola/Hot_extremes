@@ -187,7 +187,7 @@ for m in range(len(models)):
         ### tasmax ###
         
  	    #Extract year
-    	tasmax_yr = cdo.selyear(year, input=tasmax_file[0], returnArray=tasmax_name[0])
+    	tasmax_yr = cdo.selyear(year, input=tasmax_file[0], returnArray=tasmax_name)
 
 		#Mask
     	tasmax_yr[tasmax_yr.mask==True] = miss_val
