@@ -21,24 +21,29 @@ def find_days_above_percentile(mod_vec, no_days, percentile=97.5, other_vars={},
     ########################
 
     #Convert mod_vec into np.array in case not already, indexing might fail otherwise
-    mod_vec = np.array(mod_vec)
+    mod_vec = np.asarray(mod_vec)
     
 
     ### Calculate percentile threshold ###
-    
-    threshold = np.percentile(mod_vec, percentile)
 
 
     ### Find tasmax days above or equal to threshold ###
     
     #Weird problem using percentile = 100.0, hacky fix
+    #Percentile 100, i.e. max value
     if percentile == 100.0:
+        
         #if found several, pick first one
         hot_days = np.where(mod_vec == np.max(mod_vec))[0]
+        
+        #If found more than one Txx, pick first instance
         if len(hot_days) > 1:
-            hot_days = hot_days[0]
+            hot_days = np.asarray(hot_days[0])
+    
+    #All other percentiles    
     else:
-        hot_days = np.where(mod_vec >= threshold)[0]
+        threshold = np.percentile(mod_vec, percentile)
+        hot_days  = np.where(mod_vec >= threshold)[0]
     
 
     #Initialise as the correct size
